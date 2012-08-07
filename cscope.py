@@ -3,6 +3,7 @@ import os
 import re
 import subprocess
 import shlex,subprocess
+import string
 
 class CscopeCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
@@ -99,10 +100,6 @@ class CscopeCommand(sublime_plugin.TextCommand):
         # print output
         sublime.status_message("Finish geneating database")
 
-
-
-
-
     def run_cscope(self, mode, word):
         # 0 ==> C symbol
         # 1 ==> function definition
@@ -141,8 +138,10 @@ class CscopeCommand(sublime_plugin.TextCommand):
         # print output
         self.matches = []
         self.currentMode = mode
+
+        dbDir = '/'.join(self.database.split("/")[0:-1])
         for i in output:
-            match = self.match_output_line(i, mode)
+            match = self.match_output_line(i, mode, dbDir)
             if match != None:
                 self.matches.append(match)
                 #print "File ", match.group(1), ", Line ", match.group(2), ", Instance ", match.group(3)
@@ -162,7 +161,7 @@ class CscopeCommand(sublime_plugin.TextCommand):
 
         return options
 
-    def match_output_line(self, line, mode):
+    def match_output_line(self, line, mode, cdir):
         #match = None
 
         # if mode == 0:
@@ -184,6 +183,12 @@ class CscopeCommand(sublime_plugin.TextCommand):
         #print len(res)
         if (len(res) > 2):
             filename = res[0]
+            #remove dbDir from filename
+            # print cdir
+            # print filename
+            filename = string.replace(filename,cdir,"")
+            if filename[0] == '/':
+                filename = filename[1:len(filename)]
             functionname = res[1]
             lineno = res[2]
             instance = ' '.join(line.split(lineno)[1:])
