@@ -1,12 +1,27 @@
 [
-	{
-		"caption": "Cscope: Look up symbol",
-		"command": "cscope",
-		"args": {"mode": 0}
-	},
     {
-        "caption": "Cscope: Jump to function definition",
+        "caption": "Cscope: 0: Reference",
         "command": "cscope",
-		"args": {"mode": 1}
+        "args": {"mode": 0}
+    },
+    {
+        "caption": "Cscope: 1: Definition",
+        "command": "cscope",
+        "args": {"mode": 1}
+    },
+    {
+        "caption": "Cscope: 2: Called Functions",
+        "command": "cscope",
+        "args": {"mode": 2}
+    },
+    {
+        "caption": "Cscope: 3: Calling Functions",
+        "command": "cscope",
+        "args": {"mode": 3}
+    },
+    {
+        "caption": "Cscope: 9: Rebuild database",
+        "command": "cscope",
+        "args": {"mode": 9}
     }
 ]
